@@ -37,11 +37,12 @@ jaehee = [23, "Jaehee", "2005", "2024"]
 ryo = [24, "Ryo", "2007", "2024"]
 sakuya = [25, "Sakuya", "2007", "2024"]
 
+debut_years = ["2016", "2017", "2018", "2019", "2024"]
 
 # nct
 dojaejung = ["dojaejung", doyoung, jaehyun, jungwoo, "nct", "2023"]
 ilichil = [
-    "Ilichil",
+    "127",
     johnny,
     taeyong,
     yuta,
@@ -64,11 +65,21 @@ while True:
     print("Opções \n1 - Ano de debut \n2 - Unit \n3 - Nome \n4 - Idade \n")
     opcao = int(input("Insira a opção que deseje pesquisar: "))
 
+    resposta = str()
+
     id_membro = []
     membros_encontrados = []
+
     if opcao == OPCOES.ANO_DE_DEBUT.value:
         resposta = int(input("Digite o ano: "))
-        if resposta:
+        if resposta not in [int(ano) for ano in debut_years]:
+            if resposta < 2016:
+                print(
+                    "O NCT debutou, pela primeira vez, em 2016. Pesquise por anos posteriores a esse."
+                )
+            else:
+                print("Nenhum membro debutou nesse ano.")
+        elif resposta:
             for unit in nct:
                 for membro in unit:
                     if isinstance(membro, list):
@@ -76,21 +87,42 @@ while True:
                             id_membro.append(membro[0])
                             membros_encontrados.append(membro[1])
 
-    membros_id = list(set(id_membro))
-    membros = list(set(membros_encontrados))
+        membros_id = list(set(id_membro))
+        membros = list(set(membros_encontrados))
 
-    if len(membros) >= 2:
-        membros.insert(-1, "e")
-        list = ", ".join(membros).replace(", e,", " e")
+        if len(membros) >= 2:
+            membros.insert(-1, "e")
+            lista_de_membros = ", ".join(membros).replace(", e,", " e")
 
-    if (len(membros)) == 1:
-        print(f"O membro do NCT que debutou no ano {str(resposta)} foi {membros[0]}.")
-    elif (len(membros)) > 1:
-        print(f"Os membros do NCT que debutaram no ano {str(resposta)} foram {list}.")
-    elif resposta < 2016:
-        print(
-            "O NCT debutou, pela primeira vez, em 2016. Pesquise por anos posteriores a esse."
-        )
-    else:
-        print("Nenhum membro debutou nesse ano.")
+        if (len(membros)) == 1:
+            print(
+                f"O membro do NCT que debutou no ano {str(resposta)} foi {membros[0]}."
+            )
+        elif (len(membros)) > 1:
+            print(
+                f"Os membros do NCT que debutaram no ano {str(resposta)} foram {lista_de_membros}."
+            )
+
+    elif opcao == OPCOES.UNIT.value:
+        resposta = input("Digite a unit: ")
+        if resposta.lower() not in [unit[0].lower() for unit in nct]:
+            print("Digite um nome válido")
+        elif resposta:
+            for unit in nct:
+                if resposta.lower() == unit[0].lower():
+                    if isinstance(unit, list):
+                        for membro in unit:
+                            if isinstance(membro, list):
+                                membros_encontrados.append(membro[1])
+
+        membros = list(set(membros_encontrados))
+
+        if len(membros):
+            membros.insert(-1, "e")
+            lista_de_membros = ", ".join(membros).replace(", e,", " e")
+
+        if (len(membros)) > 1:
+            print(
+                f"Os membros do {resposta.capitalize() if unit[0] != wayv[0] else "WayV"} são {lista_de_membros}."
+            )
     break
