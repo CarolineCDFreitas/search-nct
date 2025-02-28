@@ -40,7 +40,7 @@ sakuya = [25, "Sakuya", "2007", "2024"]
 debut_years = ["2016", "2017", "2018", "2019", "2024"]
 
 # nct
-dojaejung = ["dojaejung", doyoung, jaehyun, jungwoo, "nct", "2023"]
+dojaejung = ["DOJAEJUNG", doyoung, jaehyun, jungwoo, "nct", "2023"]
 ilichil = [
     "127",
     johnny,
@@ -54,9 +54,9 @@ ilichil = [
     "nct",
     "2016",
 ]
-dream = ["Dream", mark, haechan, renjun, jeno, jaemin, chenle, jisung, "nct", "2016"]
-wayv = ["WayV", kun, ten, winwin, hendery, xiaojun, yangyang, "nct", "2019"]
-wish = ["Wish", sion, riku, yushi, jaehee, ryo, sakuya, "nct", "2024"]
+dream = ["dream", mark, haechan, renjun, jeno, jaemin, chenle, jisung, "nct", "2016"]
+wayv = ["wayv", kun, ten, winwin, hendery, xiaojun, yangyang, "nct", "2019"]
+wish = ["wish", sion, riku, yushi, jaehee, ryo, sakuya, "nct", "2024"]
 nct = [dojaejung, ilichil, dream, wayv, wish]
 
 
@@ -125,4 +125,37 @@ while True:
             print(
                 f"Os membros do {resposta.capitalize() if unit[0] != wayv[0] else "WayV"} são {lista_de_membros}."
             )
+
+    elif opcao == OPCOES.NOME.value:
+        resposta = input("Digite o nome: ")
+        if resposta:
+            for unit in nct:
+                for membro in unit:
+                    if isinstance(membro, list):
+                        if resposta.lower() == membro[1].lower():
+                            membros_encontrados.append(membro)
+                            id_membro.append(membro[0])
+        units_encontradas = set()
+
+        for membro in membros_encontrados:
+            for unit in nct:
+                for membro_especifico in unit:
+                    if (
+                        isinstance(membro_especifico, list)
+                        and membro_especifico[0] == membro[0]
+                    ):
+                        units_encontradas.add(unit[0])
+        units = list(units_encontradas)
+
+        if len(units) > 1:
+            units.insert(-1, "e")
+            lista_de_units = ", ".join(units).replace(", e,", " e NCT")
+
+        if (len(units)) == 1 and "wayv" in units_encontradas:
+            print(f"{resposta.capitalize()} está no WayV")
+        elif (len(units)) == 1 and "wayv" not in units_encontradas:
+            print(f"{resposta.capitalize()} está no NCT {units[0]}.")
+        elif (len(units)) >= 2:
+            print(f"{resposta.capitalize()} está no NCT {lista_de_units}.")
+
     break
