@@ -120,11 +120,11 @@ while True:
         if len(membros):
             membros.insert(-1, "e")
             lista_de_membros = ", ".join(membros).replace(", e,", " e")
-
-        if (len(membros)) > 1:
-            print(
-                f"Os membros do {resposta.capitalize() if unit[0] != wayv[0] else "WayV"} são {lista_de_membros}."
-            )
+            
+            if resposta.lower() == wayv[0]:
+                print(f"Os membros do WayV são {lista_de_membros}.")
+            else:
+                print(f"Os membros do NCT {resposta.upper()} são {lista_de_membros}.")
 
     elif opcao == OPCOES.NOME.value:
         resposta = input("Digite o nome: ")
@@ -147,14 +147,16 @@ while True:
                         units_encontradas.add(unit[0])
         units = list(units_encontradas)
 
+        #### ============= to do ========= ####
+        # lista_de_units para ajustar o dream e sua formatação tirando o replace
         if len(units) > 1:
             units.insert(-1, "e")
             lista_de_units = ", ".join(units).replace(", e,", " e NCT")
 
         if (len(units)) == 1 and "wayv" in units_encontradas:
-            print(f"{resposta.capitalize()} está no WayV")
+            print(f"{resposta.capitalize()} está no WayV.")
         elif (len(units)) == 1 and "wayv" not in units_encontradas:
-            print(f"{resposta.capitalize()} está no NCT {units[0]}.")
+            print(f"{resposta.capitalize()} está no NCT {(units[0])}.")
         elif (len(units)) >= 2:
             print(f"{resposta.capitalize()} está no NCT {lista_de_units}.")
 
