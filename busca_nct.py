@@ -84,21 +84,19 @@ while True:
                 for membro in unit:
                     if isinstance(membro, list):
                         if resposta == int(membro[3]):
-                            id_membro.append(membro[0])
-                            membros_encontrados.append(membro[1])
+                            if membro[0] not in id_membro and membro[1] not in membros_encontrados:
+                                id_membro.append(membro[0])
+                                membros_encontrados.append(membro[1])
+                                
+        if len(membros_encontrados) >= 2:
+            membros_encontrados.insert(-1, "e")
+            lista_de_membros = ", ".join(membros_encontrados).replace(", e,", " e")
 
-        membros_id = list(set(id_membro))
-        membros = list(set(membros_encontrados))
-
-        if len(membros) >= 2:
-            membros.insert(-1, "e")
-            lista_de_membros = ", ".join(membros).replace(", e,", " e")
-
-        if (len(membros)) == 1:
+        if (len(membros_encontrados)) == 1:
             print(
-                f"O membro do NCT que debutou no ano {str(resposta)} foi {membros[0]}."
+                f"O membro do NCT que debutou no ano {str(resposta)} foi {membros_encontrados[0]}."
             )
-        elif (len(membros)) > 1:
+        elif (len(membros_encontrados)) > 1:
             print(
                 f"Os membros do NCT que debutaram no ano {str(resposta)} foram {lista_de_membros}."
             )
@@ -115,12 +113,10 @@ while True:
                             if isinstance(membro, list):
                                 membros_encontrados.append(membro[1])
 
-        membros = list(set(membros_encontrados))
+        if len(membros_encontrados):
+            membros_encontrados.insert(-1, "e")
+            lista_de_membros = ", ".join(membros_encontrados).replace(", e,", " e")
 
-        if len(membros):
-            membros.insert(-1, "e")
-            lista_de_membros = ", ".join(membros).replace(", e,", " e")
-            
             if resposta.lower() == wayv[0]:
                 print(f"Os membros do WayV são {lista_de_membros}.")
             else:
@@ -145,13 +141,11 @@ while True:
                         and membro_especifico[0] == membro[0]
                     ):
                         units_encontradas.add(unit[0])
-        units = list(units_encontradas)
+        units = list(sorted(units_encontradas))
 
-        #### ============= to do ========= ####
-        # lista_de_units para ajustar o dream e sua formatação tirando o replace
         if len(units) > 1:
             units.insert(-1, "e")
-            lista_de_units = ", ".join(units).replace(", e,", " e NCT")
+            lista_de_units = ", ".join(units).upper().replace(", E,", " e NCT")
 
         if (len(units)) == 1 and "wayv" in units_encontradas:
             print(f"{resposta.capitalize()} está no WayV.")
