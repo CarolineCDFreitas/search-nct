@@ -452,25 +452,24 @@ while True:
             )
 
     elif opcao == OPCOES.UNIT.value:
-        resposta = input("Digite a unit: ")
-        if resposta.lower() not in [unit[0].lower() for unit in nct]:
+        resposta = (input("Digite a unit (127, Dream, WayV, Dojaejung ou Wish): ")).lower()
+        print(""*10)
+        if resposta not in [unit["unit"].lower() for unit in nct["units"]]:
             print("Digite um nome válido")
         elif resposta:
-            for unit in nct:
-                if resposta.lower() == unit[0].lower():
-                    anos_encontrados.append(unit[-1])
-                    if isinstance(unit, list):
-                        for membro in unit:
-                            if isinstance(membro, list):
-                                membros_encontrados.append(membro[1])
+            for unit in nct["units"]:
+                if resposta == unit["unit"].lower():
+                    anos_encontrados.append(unit["ano_de_debut"])
+                    for membros in unit["membros"]:
+                        membros_encontrados.append(membros["nome_artistico"])
 
         if len(membros_encontrados):
             membros_encontrados.insert(-1, "e")
             lista_de_membros = ", ".join(membros_encontrados).replace(", e,", " e")
 
-            if resposta.lower() == wayv[0]:
+            if resposta.lower() == wayv["unit"]:
                 print(
-                    f"O WayV debutou em {wayv[-1]}. {lista_de_membros} são os membros do WayV."
+                    f"O WayV debutou em {wayv["ano_de_debut"]}. {lista_de_membros} são os membros do WayV."
                 )
             else:
                 print(
